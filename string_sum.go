@@ -16,5 +16,5 @@ func StringSum(input string) (output string, err error) {
 
 	output = input
 
-	return "", nil
+	return output, nil
 }
