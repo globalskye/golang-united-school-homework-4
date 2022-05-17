@@ -34,8 +34,6 @@ func StringSum(input string) (output string, err error) {
 				return "", errorNotTwoOperands
 			}
 
-			f
-
 			b, err1 := strconv.Atoi(input[i:len(input)])
 			if err1 != nil {
 				return "", errorNotTwoOperands
