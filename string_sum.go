@@ -7,7 +7,6 @@ import (
 	"strings"
 )
 
-
 //use these errors as appropriate, wrapping them with fmt.Errorf function
 var (
 	// Use when the input is empty, and input is considered empty if the string contains only whitespace
@@ -25,27 +24,29 @@ func StringSum(input string) (output string, err error) {
 	b := 0
 	a := make([]int, 0, 2)
 	for i := 0; i < len(input); i++ {
-		b = i
-		if i == 0 && input[i:i+1] != "-" {
-			i++
-			value, err := strconv.Atoi(input[b : i+1])
-			if err != nil {
-				return "", fmt.Errorf("Input is wrong: %w", err)
-			}
-			a = append(a, value)
+
+		if i == 0 {
+
 			continue
 		}
 
 		if input[i:i+1] == "-" || input[i:i+1] == "+" {
 
-			i = i + 2 // 2 = двухзначное число
-			value, err := strconv.Atoi(input[b : i+1])
+			value, err := strconv.Atoi(input[b:i])
+			if err != nil {
+				return "", fmt.Errorf("Input is wrong: %w", err)
+			}
+			b = i
+			a = append(a, value)
+		}
+		if i == len(input)-1 {
+			value, err := strconv.Atoi(input[b:i])
 			if err != nil {
 				return "", fmt.Errorf("Input is wrong: %w", err)
 			}
 			a = append(a, value)
-
 		}
+
 	}
 	if len(a) != 2 {
 		return "", fmt.Errorf("Input is wrong: %w", errorNotTwoOperands)
