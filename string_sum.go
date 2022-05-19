@@ -1,11 +1,10 @@
 package string_sum
 
-
 import (
-"errors"
-"fmt"
-"strconv"
-"strings"
+	"errors"
+	"fmt"
+	"strconv"
+	"strings"
 )
 
 
@@ -18,26 +17,40 @@ var (
 )
 
 func StringSum(input string) (output string, err error) {
-	if len(input) == 0 || strings.ContainsAny(input, "") {
+	input = strings.ReplaceAll(input, " ", "")
+
+	if len(input) == 0 {
 		return "", fmt.Errorf("Input went wrong: %w", errorEmptyInput)
 	}
-
-	for i, v := range input {
-		if i == 0 && (v == '+' || v == '-') {
+	b := 0
+	a := make([]int, 0, 2)
+	for i := 0; i < len(input); i++ {
+		b = i
+		if i == 0 && input[i:i+1] != "-" {
+			i++
+			value, err := strconv.Atoi(input[b : i+1])
+			if err != nil {
+				return "", fmt.Errorf("Input is wrong: %w", err)
+			}
+			a = append(a, value)
 			continue
 		}
-		if v == '+' || v == '-' {
-			value1, err1 := strconv.Atoi(input[0:i])
-			if err1 != nil {
-				return "", fmt.Errorf("Input is wrong: %w", err1)
-			}
-			value2, err2 := strconv.Atoi(input[i:len(input)])
-			if err2 != nil {
-				return "", fmt.Errorf("Input is wrong: %w", err2)
-			}
-			output = strconv.Itoa(value1 + value2)
-		}
 
+		if input[i:i+1] == "-" || input[i:i+1] == "+" {
+
+			i = i + 2 // 2 = двухзначное число
+			value, err := strconv.Atoi(input[b : i+1])
+			if err != nil {
+				return "", fmt.Errorf("Input is wrong: %w", err)
+			}
+			a = append(a, value)
+
+		}
 	}
+	if len(a) != 2 {
+		return "", fmt.Errorf("Input is wrong: %w", errorNotTwoOperands)
+	}
+	output = strconv.Itoa(a[0] + a[1])
 	return output, nil
+
 }
