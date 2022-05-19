@@ -1,11 +1,13 @@
 package string_sum
 
+
 import (
 	"errors"
 	"fmt"
 	"strconv"
 	"strings"
 )
+
 
 //use these errors as appropriate, wrapping them with fmt.Errorf function
 var (
@@ -40,7 +42,7 @@ func StringSum(input string) (output string, err error) {
 			a = append(a, value)
 		}
 		if i == len(input)-1 {
-			value, err := strconv.Atoi(input[b:i])
+			value, err := strconv.Atoi(input[b : i+1])
 			if err != nil {
 				return "", fmt.Errorf("Input is wrong: %w", err)
 			}
