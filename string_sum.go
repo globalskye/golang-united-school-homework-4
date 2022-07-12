@@ -25,15 +25,12 @@ func StringSum(input string) (output string, err error) {
 	input = strings.ReplaceAll(input, " ", "")
 
 	if len(input) == 0 {
-		return "", fmt.Errorf("Input went wrong: %w", errorEmptyInput)
+		return "", badInput(errorEmptyInput)
 	}
 	b := 0
 	a := make([]int, 0)
-	for i := 0; i < len(input); i++ {
+	for i := 1; i < len(input); i++ {
 
-		if i == 0 {
-			continue
-		}
 
 		if input[i:i+1] == "-" || input[i:i+1] == "+" {
 
